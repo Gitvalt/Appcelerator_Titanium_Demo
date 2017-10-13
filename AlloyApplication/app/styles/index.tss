@@ -1,0 +1,22 @@
+".container": {
+	backgroundColor:"white",
+}
+
+"Label": {
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE,
+	color: "black"
+}
+
+"#jsonButton": {
+	top: "40dp",
+	left: "10dp"
+}
+
+"#label": {
+	top: "10dp",
+	left: "10dp",
+	font: {
+		fontSize: 12
+	}
+}

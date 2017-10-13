@@ -1,0 +1,8 @@
+<Alloy>	
+	<Window class="container" layout="vertical" backgroundColor="white">
+		<Label id="label">Get locations from web jsonfile</Label>
+		<View id="listView">
+			
+		</View>
+	</Window>
+</Alloy>
