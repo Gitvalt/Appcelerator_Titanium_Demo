@@ -1,15 +1,14 @@
 /**
- * Open the index.xml view
+ * Avataan index näkymä. (app/views/index.xml)
  */
 //$.index.open();
-openView();
 
-
-
+//avataan näkymä defaultView
+openView("defaultView");
 
 /**
- * @function				Loads the map
- * @param		targetView	The view where map will be loaded
+ * @function				Ladataan kartta
+ * @param		targetView	näkymä, jonne kartta ladataan
  */
 function loadMap(targetView){
 	var Map = require("ti.map");
@@ -21,9 +20,10 @@ function loadMap(targetView){
 }
 
 /**
- * Testing opening new view
+ * Avataan uusi näkymä avaamalla kontrolleri. (app/controllers/*)
+ * @param	viewName 	Kontrolleri, joka avataan
  */
-function openView(){
-	var windows = Alloy.createController('defaultView').getView();
+function openView(viewName){
+	var windows = Alloy.createController(viewName).getView();
 	windows.open();
 }

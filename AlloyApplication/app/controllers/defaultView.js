@@ -1,21 +1,22 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
-jsonURL = 'http://student.labranet.jamk.fi/~K1967/androidCourses/dummyJSON.json';
 
 /**
- * Luodaan array ja listään sen elementit listaan. Lista lisätään luotuun näyttöön.
+ * Haetaan sijaintitietoa "jsonURL" osoitteesta ja luodaan listaelementti näkymään
  */
+jsonURL = 'http://student.labranet.jamk.fi/~K1967/androidCourses/dummyJSON.json';
 
 var items = fetchJSON(jsonURL);
 console.info("ITEMS!!!");
 console.log(items);
 
-
+//avataan näkymä
 $.defaultView.open();
 
 /**
- * Käsitellään haettu json response
+ * @desc Käsitellään haettu json tiedosto. Esim. kun tietoa aletaan sivun latautuessa hakemaan, niin fetchjson vastaa jo "undefined" vaikka lataus on kesken. 
+ * Kun lataus on suoritettu tai se epäonnistuu, suorittaa fetchjson tämän funktion uudestaan, mutta tällä kertää @response oikeasti sisältää vastauksen. 
  * @param {*} response 
  */
 function handleJSON(response){
@@ -47,8 +48,8 @@ function handleJSON(response){
 /**
  * Luodaan array, joka sisältää määritellyt string elementit
  *
- * @param  {Array}<String> Kaikki listaan listävävät materiaalit
- * @return {ListView} Lista, jossa on luodut osiot
+ * @param  items 		Kaikki listaan listävävät materiaalit
+ * @return {ListView} 	Lista, jossa on luodut osiot
  */
 function createList(items) {
 	var ItemList = Ti.UI.createListView({
@@ -89,8 +90,8 @@ function createList(items) {
 }
 
 /**
- * Haetaan määritetystä url-osoitteesta json tiedosto
- * @param {string} targetURL 
+ * @desc			Haetaan määritetystä url-osoitteesta "targetURL" json-tiedosto
+ * @param {string} 	targetURL 
  */
 function fetchJSON(targetURL){
         var client = Ti.Network.createHTTPClient({
