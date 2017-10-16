@@ -1,10 +1,13 @@
 /**
  * Avataan index näkymä. (app/views/index.xml)
  */
-//$.index.open();
+$.index.open();
+//openFetcher();
 
-//avataan näkymä defaultView
-openView("defaultView");
+function openFetcher(){
+	//avataan näkymä defaultView
+	openView("defaultView");
+}
 
 /**
  * @function				Ladataan kartta
@@ -24,6 +27,12 @@ function loadMap(targetView){
  * @param	viewName 	Kontrolleri, joka avataan
  */
 function openView(viewName){
-	var windows = Alloy.createController(viewName).getView();
-	windows.open();
+	
+	if(viewName == null || viewName == undefined){
+		console.error("View to be opened is undefined or empty!");
+	}
+	else {
+		var windows = Alloy.createController(viewName).getView();
+		windows.open();		
+	}
 }

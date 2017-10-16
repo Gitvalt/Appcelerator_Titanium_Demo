@@ -1,18 +1,49 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
+//avataan näkymä
+$.defaultView.open();
 
 /**
  * Haetaan sijaintitietoa "jsonURL" osoitteesta ja luodaan listaelementti näkymään
  */
 jsonURL = 'http://student.labranet.jamk.fi/~K1967/androidCourses/dummyJSON.json';
-
 var items = fetchJSON(jsonURL);
-console.info("ITEMS!!!");
-console.log(items);
 
-//avataan näkymä
-$.defaultView.open();
+//var notf_id = 0;
+//createNotification("Hello world", "Nice android you have here");
+
+
+function refreshClick(){
+	fetchJSON(jsonURL);
+}
+
+function toMainMenu(){
+	var windows = Alloy.createController("index").getView();
+	$.defaultView.close();
+}
+
+/**
+ * Luodaan notifikaatio android laitteelle
+ * @param 	title	otsikko notifikaatiolle
+ * @param	message	viesti notifikaatiolle
+ */
+function createNotification(title, message){
+	Ti.Android.NotificationManager.notify(notf_id,
+    Ti.Android.createNotification({
+        contentTitle: title,
+        contentText: message,
+        icon: "Resources/android/images/default.png",
+        contentIntent: Titanium.Android.createPendingIntent({
+        	intent: Titanium.Android.createIntent({
+        		url: 'app.js'
+        	})
+        })
+    })
+	);
+	
+	notf_id++;
+}
 
 /**
  * @desc Käsitellään haettu json tiedosto. Esim. kun tietoa aletaan sivun latautuessa hakemaan, niin fetchjson vastaa jo "undefined" vaikka lataus on kesken. 
@@ -31,18 +62,37 @@ function handleJSON(response){
         break;
     
         default:
-            var list = createList(response);
-            
-            list.class = "list";
-            /*
-            list.fontSize = "20";
-            list.height = "400";
-            list.width = "200";
-            */
-           
-            $.listView.add(list);
+    		$.list.deleteSectionAt(0);	
+		
+        	var list = createList(response);
+            list.setHeaderTitle("Locations");
+           	//add list to view
+          	$.list.appendSection(list);
+          	
+          
+            //show "completed task" Toast
+			$.taskDoneNotf.show();
         break;
     }
+}
+
+/**
+ * Näytetään toast-viesti puhelimessa
+ * @param	message			
+ * @param	toast_duration	
+ */
+function showToastMessage(message, toast_duration){
+	var toast = Ti.UI.createNotification({
+		message: "Hello World",
+		duration: Ti.UI.NOTIFICATION_DURATION_SHORT
+	});
+
+	toast.show();
+}
+
+function clickEvent(e){
+	console.log("click");
+	alert("s");	
 }
 
 /**
@@ -53,7 +103,8 @@ function handleJSON(response){
  */
 function createList(items) {
 	var ItemList = Ti.UI.createListView({
-		id : "itemList"
+		id : "itemList",
+		onItemclick: clickEvent
 	});
     
     var array = [];
@@ -84,9 +135,8 @@ function createList(items) {
 
 	var ItemSection = Ti.UI.createListSection();
 	ItemSection.setItems(array);
-
-	ItemList.setSections([ItemSection]);
-	return ItemList;
+	//ItemList.setSections([ItemSection]);
+	return ItemSection;
 }
 
 /**
@@ -94,6 +144,7 @@ function createList(items) {
  * @param {string} 	targetURL 
  */
 function fetchJSON(targetURL){
+		
         var client = Ti.Network.createHTTPClient({
             onload : function(e) {
                 
@@ -124,7 +175,7 @@ function fetchJSON(targetURL){
                     for (var item in Locations) {
                         var name = Locations[item]["Title"];
                         console.log("name: " + name);
-                        locs.push(name);     
+                        locs.push(name);  
                     }
                     
                     console.log("Locations loaded, returning");

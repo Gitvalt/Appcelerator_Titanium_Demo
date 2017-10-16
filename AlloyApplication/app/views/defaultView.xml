@@ -1,8 +1,17 @@
 <Alloy>	
 	<Window class="container" layout="vertical" backgroundColor="white">
+		<Notification id="taskDoneNotf" platform="android" message="Loading Completed" duration="Ti.UI.NOTIFICATION_DURATION_SHORT"/>
 		<Label id="label">Get locations from web jsonfile</Label>
 		<View id="listView">
-			
+			<ListView id="list" onClick="clickEvent" class="listView">
+				
+			</ListView>
 		</View>
+		
+		<Menu>
+			<MenuItem id="menu_jsonFetcher" title="Refresh locations" onClick="refreshClick" />
+			<MenuItem id="menu_mainmenu" title="Mainmenu" onClick="toMainMenu" />
+		</Menu>
+		
 	</Window>
 </Alloy>

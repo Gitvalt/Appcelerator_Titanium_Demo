@@ -2,6 +2,6 @@
 	<Module module="ti.map"></Module>
 	<Window class="container">
 		<Label id="label">This is a Label</Label>
-		<Button id="jsonButton" onClick="openView">Open JSONfetcher</Button>>
+		<Button id="jsonButton" onClick="openFetcher">Open JSONfetcher</Button>
 	</Window>
 </Alloy>
