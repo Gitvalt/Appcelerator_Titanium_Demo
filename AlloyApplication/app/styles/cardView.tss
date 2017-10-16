@@ -1,0 +1,69 @@
+
+".container" : {
+  
+}
+
+".list_header": {
+	top: "10",
+	font: {
+		fontSize: "20dp",
+		fontWeight: "bold"
+	}
+}
+
+".list_description": {
+	top: "50",
+	bottom: "30"
+}
+
+".listItemContainer": {
+	backgroundColor: "grey",
+	border: {
+		borderColor: "black",
+		borderWidth: "2dp"
+	}	
+}
+
+"#header": {
+	top: "10",
+	left: "10dp",
+	width: "300dp",
+	height: Titanium.UI.SIZE,
+	
+	borderColor: "black",
+	borderWidth: "1dp"
+}
+
+"#textArea": {
+	top: "80",
+	left: "10dp",
+	width: "300dp",
+	height: "300dp",
+	
+	borderColor: "black",
+	borderWidth: "1dp"
+}
+
+"#submitButton": {
+	top: "400",
+	left: "10dp"
+}
+
+"#listView": {
+	width: Titanium.UI.FILL,
+	height: Titanium.UI.FILL,
+	backgroundColor: "white"
+}
+
+".listItem": {
+	top: "5dp",
+	width: Titanium.UI.FILL,
+	font: "black"
+}
+
+"Label": {
+	left: "10dp",
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE,
+	color: "black"
+}

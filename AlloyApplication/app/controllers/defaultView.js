@@ -78,15 +78,14 @@ function handleJSON(response){
 
 /**
  * Näytetään toast-viesti puhelimessa
- * @param	message			
- * @param	toast_duration	
+ * @param	message			Toast-viesti
+ * @param	toast_duration	Viestin kesto
  */
 function showToastMessage(message, toast_duration){
 	var toast = Ti.UI.createNotification({
-		message: "Hello World",
-		duration: Ti.UI.NOTIFICATION_DURATION_SHORT
+		message: message,
+		duration: toast_duration
 	});
-
 	toast.show();
 }
 

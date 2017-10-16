@@ -3,5 +3,6 @@
 	<Window class="container">
 		<Label id="label">This is a Label</Label>
 		<Button id="jsonButton" onClick="openFetcher">Open JSONfetcher</Button>
+		<Button id="cardButton" onClick="openCard">Open CardViewer</Button>
 	</Window>
 </Alloy>

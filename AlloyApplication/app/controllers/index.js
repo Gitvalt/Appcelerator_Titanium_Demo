@@ -9,6 +9,10 @@ function openFetcher(){
 	openView("defaultView");
 }
 
+function openCard(){
+	openView("cardView");
+}
+
 /**
  * @function				Ladataan kartta
  * @param		targetView	näkymä, jonne kartta ladataan

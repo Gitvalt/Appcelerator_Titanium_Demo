@@ -1,0 +1,35 @@
+<Alloy>
+	<!--Creating a group of tabs-->
+	<TabGroup id="mainTabGroup">
+		
+		<!--defaultTab shows a form that allows creatig new reviews-->
+		<Tab id="defaultTab" title="Add review">
+			<Window id="defaultWindow">
+				<TextField id="header"></TextField>
+				<TextArea id="textArea"></TextArea>
+				<Button id="submitButton" title="Submit review" onClick="submitClick"></Button>
+			</Window>
+		</Tab>
+		
+		<!--resultTab contains list of sent reviews-->
+		<Tab id="resultsTab" title="View results">
+			<Window id="resultsWindow">
+				<ListView id="listView" defaultItemTemplate="elementTemplate">
+					
+					<!--We create a itemTemplate so that can show the Review object. Can contain multiple ItemTemplates.-->
+					<Templates>
+						<ItemTemplate name="elementTemplate">
+				            <View id="ReviewInspector" class="listItemContainer">
+				                <Label bindId="header" id="name" class="list_header" />
+				                <Label bindId="description" id="description" class="list_description" />
+				            </View>
+				        </ItemTemplate>
+					</Templates>
+					
+					<ListSection id="mainSection" headerTitle="Reviews" />
+						
+				</ListView>
+			</Window>
+		</Tab>
+	</TabGroup>
+</Alloy>

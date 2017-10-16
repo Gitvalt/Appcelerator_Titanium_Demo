@@ -7,10 +7,13 @@
 	height: Ti.UI.SIZE,
 	color: "black"
 }
-
-"#jsonButton": {
+"Button": {
 	top: "40dp",
 	left: "10dp"
+}
+
+"#cardButton": {
+	top: "80dp"
 }
 
 "#label": {
