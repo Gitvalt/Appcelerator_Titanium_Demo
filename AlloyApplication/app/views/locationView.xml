@@ -1,0 +1,47 @@
+<Alloy>	
+	<Window class="container" layout="vertical" backgroundColor="white">
+		
+		<!--Predefined toast notification-->
+		<Notification id="taskDoneNotf" platform="android" message="Loading Completed" duration="Ti.UI.NOTIFICATION_DURATION_SHORT"/>
+		
+		<!--Menu element-->
+		<Menu>
+			<MenuItem id="menu_jsonFetcher" title="Refresh locations" onClick="refreshClick" />
+			<MenuItem id="menu_mainmenu" title="Mainmenu" onClick="toMainMenu" />
+		</Menu>
+		
+		<Label id="label">Loading location data from url...</Label>
+		
+		<!--List container-->
+		<View id="listView_View">
+			<ListView id="listView" defaultItemTemplate="location_full">
+				
+				<!--We create a itemTemplate so that can show the Review object. Can contain multiple ItemTemplates.-->
+					<Templates>
+						<ItemTemplate name="location_full">
+				            <View id="ReviewInspector" class="listItemContainer">
+				                <Label bindId="header" id="name" class="list_header" />
+				                <Label bindId="latitude" id="lat" class="la_style" />
+				                <Label bindId="longitude" id="long" class="lo_style" />
+				                <Label bindId="description" id="description" class="list_description" />
+				            </View>
+				        </ItemTemplate>
+					</Templates>
+				
+				<ListSection id="listView_Section">
+					
+				</ListSection>	
+			</ListView>
+		</View>
+		<TableView borderColor="red" borderWidth="2" bottom="0" width="100%" height="Titanium.UI.SIZE">
+			<TableViewSection>
+				<TableViewRow>
+					<Button id="returnToList_Button" title="Return to location list" onClick="returnToList" />
+				</TableViewRow>
+				<TableViewRow>
+					<Button id="ToMainMenu" title="Return to main menu" onClick="toMainMenu" />
+				</TableViewRow>
+			</TableViewSection>
+		</TableView>	
+	</Window>
+</Alloy>

@@ -26,8 +26,8 @@
 				        </ItemTemplate>
 					</Templates>
 					
+					<!--ListSection contains the list items-->
 					<ListSection id="mainSection" headerTitle="Reviews" />
-						
 				</ListView>
 			</Window>
 		</Tab>

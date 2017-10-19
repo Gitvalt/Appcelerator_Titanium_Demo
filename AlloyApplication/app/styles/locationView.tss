@@ -1,0 +1,61 @@
+".container" : {
+}
+
+//Affects all elements of type "Label"
+"Label": {
+	color: "black",
+	textAlign: Titanium.UI.TEXT_ALIGNMENT_LEFT,
+	left: "10"
+}
+
+//the "welcome" label
+"#label": {
+	top: "10",
+	left: "10",
+	width: "100%",
+	height: Titanium.UI.SIZE,
+	font: {
+		fontSize: "20"
+	}
+}
+
+//Affects element with id "listView"
+"#listView_View": {
+	top: "0",
+	left: "10",
+	right: "10",
+	width: Titanium.UI.FILL,
+	height: "65%"
+}
+
+".list_header": {
+	textAlign: Titanium.UI.TEXT_ALIGNMENT_LEFT,
+	top: "10",
+	font: {
+		fontSize: "14",
+		fontWeight: "bold"
+	}
+}
+
+".la_style": {
+	top: 30,
+	fontSize: 12
+}
+
+
+".lo_style": {
+	top: 30,
+	left: 200,
+	fontSize: 12
+}
+
+".list_description": {
+	top: 60,
+	left: 15,
+	bottom: 20,
+	font: {
+		fontSize: 12,
+		fontStyle: "italic"
+	}	
+}
+

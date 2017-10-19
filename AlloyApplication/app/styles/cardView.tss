@@ -54,13 +54,13 @@
 	height: Titanium.UI.FILL,
 	backgroundColor: "white"
 }
-
+/*
 ".listItem": {
 	top: "5dp",
 	width: Titanium.UI.FILL,
 	font: "black"
 }
-
+*/
 "Label": {
 	left: "10dp",
 	width: Ti.UI.SIZE,

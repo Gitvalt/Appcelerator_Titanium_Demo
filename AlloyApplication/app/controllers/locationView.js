@@ -2,17 +2,23 @@
 var args = $.args;
 
 //avataan näkymä
-$.defaultView.open();
+$.locationView.open();
 
 /**
  * Haetaan sijaintitietoa "jsonURL" osoitteesta ja luodaan listaelementti näkymään
  */
-jsonURL = 'http://student.labranet.jamk.fi/~K1967/androidCourses/dummyJSON.json';
-var items = fetchJSON(jsonURL);
+var jsonURL = 'http://student.labranet.jamk.fi/~K1967/androidCourses/dummyJSON.json';
+fetchJSON(jsonURL);
 
-//var notf_id = 0;
-//createNotification("Hello world", "Nice android you have here");
+var fetchedLocation = null;
 
+var mapView = null;
+
+/**
+ * Testing notifications
+ * var notf_id = 0;
+ * createNotification("Hello world", "Nice android you have here");
+ */
 
 function refreshClick(){
 	fetchJSON(jsonURL);
@@ -20,7 +26,7 @@ function refreshClick(){
 
 function toMainMenu(){
 	var windows = Alloy.createController("index").getView();
-	$.defaultView.close();
+	$.locationView.close();
 }
 
 /**
@@ -45,6 +51,54 @@ function createNotification(title, message){
 	notf_id++;
 }
 
+
+function handleItemClick(e){
+	
+	if(e == null){
+		console.error("Itemclick 'e' was empty!");
+		return;
+	}
+	
+	var itemIndex = e.itemIndex;
+	var item;
+	
+	item = fetchedLocation[itemIndex];
+	loadMap($.mapView);
+}
+
+/**
+ * When map has been pressed return to location list.
+ * We do not reload json information from internet. We use items in fetchedLocation variable
+ * 1. Delete map view
+ * 2. Restore List visibility
+ */
+function returnToList(){
+	
+	$.listView_View.remove(mapView);
+	$.listView.setVisible(true);
+	console.log("Removing mapview");
+}
+
+/**
+ * @function				Ladataan kartta
+ * @param		targetView	näkymä, jonne kartta ladataan
+ */
+function loadMap(targetView){
+	
+	var Map = require("ti.map");
+	
+	var mapview = Map.createView({
+		mapType: Map.NORMAL_TYPE
+	});
+	
+	$.listView.setVisible(false);
+	$.listView_View.add(mapview);
+	
+	//save the view for deletion
+	mapView = mapview;
+}
+
+
 /**
  * @desc Käsitellään haettu json tiedosto. Esim. kun tietoa aletaan sivun latautuessa hakemaan, niin fetchjson vastaa jo "undefined" vaikka lataus on kesken. 
  * Kun lataus on suoritettu tai se epäonnistuu, suorittaa fetchjson tämän funktion uudestaan, mutta tällä kertää @response oikeasti sisältää vastauksen. 
@@ -62,14 +116,14 @@ function handleJSON(response){
         break;
     
         default:
-    		$.list.deleteSectionAt(0);	
-		
+			
+			//get information as a ListSection
         	var list = createList(response);
-            list.setHeaderTitle("Locations");
-           	//add list to view
-          	$.list.appendSection(list);
+        	
+            //list.setHeaderTitle("Locations");
+           	
+           	$.listView_Section.setItems(list);
           	
-          
             //show "completed task" Toast
 			$.taskDoneNotf.show();
         break;
@@ -89,11 +143,6 @@ function showToastMessage(message, toast_duration){
 	toast.show();
 }
 
-function clickEvent(e){
-	console.log("click");
-	alert("s");	
-}
-
 /**
  * Luodaan array, joka sisältää määritellyt string elementit
  *
@@ -101,10 +150,6 @@ function clickEvent(e){
  * @return {ListView} 	Lista, jossa on luodut osiot
  */
 function createList(items) {
-	var ItemList = Ti.UI.createListView({
-		id : "itemList",
-		onItemclick: clickEvent
-	});
     
     var array = [];
     console.log("Found items: " + items);
@@ -114,12 +159,18 @@ function createList(items) {
         return;
     }
 
-
 	if (items.length > 0) {
 		for (var i = 0; i < items.length; i++) {
+			/**
+			 * Creating listitems for template "location_full"
+			 * {bindId}: {{datatype}: "data"}
+			 */
 			array.push({
+				header: {text: items[i].Title},
+				description: {text: items[i].Description},
+				latitude: {text: "Lat: " + items[i].Latitude},
+				longitude: {text: "Long: " + items[i].Longitude}, 
 				properties : {
-					title: items[i],
 					color: "black",
 					borderColor: "black",
 					borderWidth: "1dp",
@@ -134,8 +185,12 @@ function createList(items) {
 
 	var ItemSection = Ti.UI.createListSection();
 	ItemSection.setItems(array);
-	//ItemList.setSections([ItemSection]);
-	return ItemSection;
+	
+	$.listView.addEventListener('itemclick', function(e){
+		handleItemClick(e);
+	});
+	
+	return array;
 }
 
 /**
@@ -169,18 +224,11 @@ function fetchJSON(targetURL){
     
                     //render location
                     var Locations = location_json["Locations"];
-                    var locs = [];
-    
-                    for (var item in Locations) {
-                        var name = Locations[item]["Title"];
-                        console.log("name: " + name);
-                        locs.push(name);  
-                    }
-                    
-                    console.log("Locations loaded, returning");
-                    console.info(locs);
-
-                    handleJSON(locs);
+					
+					//save values to variable
+					fetchedLocation = Locations;
+					
+					handleJSON(Locations);
                 }
             }
         });

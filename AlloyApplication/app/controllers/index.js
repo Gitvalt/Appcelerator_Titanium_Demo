@@ -5,8 +5,8 @@ $.index.open();
 //openFetcher();
 
 function openFetcher(){
-	//avataan näkymä defaultView
-	openView("defaultView");
+	//avataan näkymä locationView
+	openView("locationView");
 }
 
 function openCard(){

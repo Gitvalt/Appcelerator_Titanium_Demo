@@ -8,12 +8,18 @@
 	color: "black"
 }
 "Button": {
-	top: "40dp",
-	left: "10dp"
+	top: "40",
+	left: "10",
+	right: "10",
+	width: Titanium.UI.FILL,
+	height: "80",
+	font: {
+		fontSize: 18
+	}
 }
 
 "#cardButton": {
-	top: "80dp"
+	top: "140"
 }
 
 "#label": {
