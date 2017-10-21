@@ -1,0 +1,6 @@
+<Alloy>
+	<TextField id="header"></TextField>
+	<TextArea id="textArea"></TextArea>
+	<Button id="submitButton" title="L('submitButton_text')" onClick="submitClick"></Button>
+	<Button id="exitButton" title="L('exitButton_text')" onClick="exitClick"></Button>	
+</Alloy>

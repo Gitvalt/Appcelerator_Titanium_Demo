@@ -1,8 +1,8 @@
 <Alloy>
 	<Module module="ti.map"></Module>
 	<Window class="container">
-		<Label id="label">This is a Label</Label>
-		<Button id="jsonButton" onClick="openFetcher">Open JSONfetcher</Button>
-		<Button id="cardButton" onClick="openCard">Open CardViewer</Button>
-	</Window>
+		<Label id="label" text="L('Welcome_text')"></Label>
+		<Button id="jsonButton" onClick="openFetcher" title="L('mainmenu_button_1')"/>
+		<Button id="cardButton" onClick="openReview" title="L('mainmenu_button_2')"/>
+	</Window> 
 </Alloy>

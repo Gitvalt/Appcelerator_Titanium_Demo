@@ -49,18 +49,17 @@
 	left: "10dp"
 }
 
+"#exitButton": {
+	top: "400",
+	right: "10dp"
+}
+
 "#listView": {
 	width: Titanium.UI.FILL,
 	height: Titanium.UI.FILL,
 	backgroundColor: "white"
 }
-/*
-".listItem": {
-	top: "5dp",
-	width: Titanium.UI.FILL,
-	font: "black"
-}
-*/
+
 "Label": {
 	left: "10dp",
 	width: Ti.UI.SIZE,

@@ -1,29 +1,36 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
+var jsonURL = 'http://student.labranet.jamk.fi/~K1967/androidCourses/dummyJSON.json';
+
+//haetut sijainnit
+var fetchedLocation = null;
+
+//karttanäkymä
+var mapView = null;
+
 //avataan näkymä
 $.locationView.open();
 
 /**
  * Haetaan sijaintitietoa "jsonURL" osoitteesta ja luodaan listaelementti näkymään
  */
-var jsonURL = 'http://student.labranet.jamk.fi/~K1967/androidCourses/dummyJSON.json';
 fetchJSON(jsonURL);
 
-var fetchedLocation = null;
 
-var mapView = null;
+
+//Funktiot:
 
 /**
- * Testing notifications
- * var notf_id = 0;
- * createNotification("Hello world", "Nice android you have here");
+ * Kun "päivitys"-painiketta painetaan, ohjelma hakee sijainnit uudestaan internetistä.
  */
-
 function refreshClick(){
 	fetchJSON(jsonURL);
 }
 
+/**
+ * Painike palauttaa käyttäjän aloitusnäkymään.
+ */
 function toMainMenu(){
 	var windows = Alloy.createController("index").getView();
 	$.locationView.close();
@@ -51,7 +58,10 @@ function createNotification(title, message){
 	notf_id++;
 }
 
-
+/**
+ * Käsitellään sijaintilistan elementin painaminen
+ * @param	e	Sisältää tiedot painikkeesta, jota painettiin
+ */
 function handleItemClick(e){
 	
 	if(e == null){
@@ -62,20 +72,23 @@ function handleItemClick(e){
 	var itemIndex = e.itemIndex;
 	var item;
 	
+	//haetaan sijainneista valittu sijainti
 	item = fetchedLocation[itemIndex];
+	
+	//ladataan kartta
 	loadMap($.mapView);
 }
 
 /**
- * When map has been pressed return to location list.
- * We do not reload json information from internet. We use items in fetchedLocation variable
- * 1. Delete map view
- * 2. Restore List visibility
+ * Poistetaan auki oleva karttanäkymä ja palataan sijaintien listanäkymään. Lista-elementien näkyvyys palautetaan. 
  */
 function returnToList(){
-	
+	//poistetaan karttanäkymä
 	$.listView_View.remove(mapView);
+	
+	//listanäkymä näkyvyys palautetaan
 	$.listView.setVisible(true);
+	
 	console.log("Removing mapview");
 }
 
@@ -86,6 +99,17 @@ function returnToList(){
 function loadMap(targetView){
 	
 	var Map = require("ti.map");
+	
+	if(Ti.Platform.Android.API_LEVEL < "25"){
+		
+		console.log(Ti.Platform.Android.API_LEVEL);
+			
+		var isEnabled = Map.isGooglePlayServicesAvailable();
+		if(isEnabled != Map.SUCCESS){
+			console.error("Not enabled");	
+		}
+		
+	} 
 	
 	var mapview = Map.createView({
 		mapType: Map.NORMAL_TYPE

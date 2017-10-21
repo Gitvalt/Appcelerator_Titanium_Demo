@@ -1,0 +1,41 @@
+"Label": {
+	color: 'black',
+	font: {
+		fontSize: 18,
+		fontWeight: 'bold'
+	},
+	height: Ti.UI.SIZE,
+	width: Ti.UI.SIZE
+}
+
+"#header": {
+	top: "10",
+	left: "10dp",
+	width: "300dp",
+	height: Titanium.UI.SIZE,
+	color: "black",
+	backgroundColor: "white",
+	borderColor: "black",
+	borderWidth: "1dp"
+}
+
+"#textArea": {
+	top: "80",
+	left: "10dp",
+	width: "300dp",
+	height: "300dp",
+	color: "black",
+	backgroundColor: "white",
+	borderColor: "black",
+	borderWidth: "1dp"
+}
+
+"#submitButton": {
+	top: "400",
+	left: "10dp"
+}
+
+"#exitButton": {
+	top: "400",
+	right: "10dp"
+}

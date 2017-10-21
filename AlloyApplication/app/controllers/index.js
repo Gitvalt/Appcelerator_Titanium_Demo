@@ -2,28 +2,56 @@
  * Avataan index näkymä. (app/views/index.xml)
  */
 $.index.open();
-//openFetcher();
 
 function openFetcher(){
+	
+	//should warn
+	
+	var dialog = function(title, msg){
+		var confirmSettings = Ti.UI.createAlertDialog({
+			title: title,
+			message: msg,
+			cancel: 0,
+			buttonNames: [L("cancel")]
+		});
+		
+		confirmSettings.show();
+	};
+	
 	//avataan näkymä locationView
 	openView("locationView");
-}
-
-function openCard(){
-	openView("cardView");
-}
-
-/**
- * @function				Ladataan kartta
- * @param		targetView	näkymä, jonne kartta ladataan
- */
-function loadMap(targetView){
-	var Map = require("ti.map");
-	var mapview = Map.createView({
-		mapType: Map.NORMAL_TYPE
-	});
 	
-	targetView.add(mapview);
+	/*
+	//TODO!
+	if(Ti.Platform.osname == "android"){
+		if(Ti.Platform.Android.API_LEVEL < "25"){
+			console.log(Ti.Platform.Android.API_LEVEL);
+			var Map = require("ti.map");
+			
+			var isEnabled = Map.isGooglePlayServicesAvailable();
+			if(isEnabled != Map.SUCCESS){
+				console.error("Not success");	
+			}
+			
+			dialog(L("confirm_api_lvl_title"), L("confirm_api_lvl_content"));
+		} 
+		else 
+		{
+			
+		}
+	} 
+	else 
+	{
+		console.log(Ti.Platform.osname);
+		dialog(L("confirm_os_title"), L("confirm_os_content"));
+	}
+	*/
+	
+	
+}
+
+function openReview(){
+	openView("reviewView");
 }
 
 /**

@@ -1,0 +1,41 @@
+<resources>
+	<string name="Welcome_text">Welcome to Appcelerator Titanium SDK 6.1.2.GA testprogram</string>
+	<string name="mainmenu_button_1">Location display</string>
+	<string name="mainmenu_button_2">Create Review</string>
+	
+	<string name="warning_dataWillBeLost">Warning! Unsubmited data will be lost!</string>
+	<string name="confirm_Exit">Confirm Exit</string>
+	
+	<string name="clear_db">Clear Database</string>
+	<string name="exit_to_main">Exit to Main Menu</string>
+	
+	<string name="add_review">Add review</string>
+	<string name="view_results">View results</string>
+	<string name="reviews">Reviews</string>
+	
+	<string name="loading_completed">Loading completed</string>
+	<string name="loading_completed">Loading...</string>
+	
+	<string name="refresh_locations">Refresh locations</string>
+	<string name="locationView_label_1">Loading location data from url...</string>
+	
+	<string name="return_to_list">Return to location List</string>
+	<string name="clear_confirm">Are you sure you want to clear all data from table?</string>
+	<string name="clear_confirm_title">Clear database</string>
+	
+	<string name="confirm_api_lvl_title">Lower API level</string>
+	<string name="confirm_api_lvl_content">Your phones API level is lower than required</string>
+	
+	<string name="confirm_os_title">Operation system error</string>
+	<string name="confirm_os_content">Your phones is not a Android. All feature will not work</string>
+	
+	
+	<string name="cancel">Cancel</string>
+	<string name="exit">Exit</string>
+	<string name="submit">Submit</string>
+	<string name="confirm">Confirm</string>
+	
+	<string name="submitButton_text">Submit review</string>
+	<string name="exitButton_text">Exit form</string>
+</resources>
+

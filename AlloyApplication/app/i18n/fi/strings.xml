@@ -1,0 +1,40 @@
+<resources>
+	<string name="Welcome_text">Tervetuloa Appcelerator Titanium SDK 6.1.2.GA testiohjelmaan</string>
+	<string name="mainmenu_button_1">Sijaintinäkymä</string>
+	<string name="mainmenu_button_2">Luo palaute</string>
+	
+	<string name="warning_dataWillBeLost">Varoitus! Ei lähetetty data poistetaan!</string>
+	<string name="confirm_Exit">Varmista poistuminen</string>
+	
+	<string name="clear_db">Tyhjennä tietokanta</string>
+	<string name="exit_to_main">Poistu aloitusvalikkoon</string>
+	
+	<string name="add_review">Lisää palaute</string>
+	<string name="view_results">Näytä tulokset</string>
+	<string name="reviews">Palautteet</string>
+	
+	<string name="loading_completed">Lataus onnistui</string>
+	<string name="loading_completed">Ladataan...</string>
+	
+	<string name="refresh_locations">Päivitä sijainnin</string>
+	<string name="locationView_label_1">Päivitä sijaintidata verkko-osoitteesta...</string>
+	
+	<string name="return_to_list">Palaa sijainti listaan</string>
+	<string name="clear_confirm">Oletko varma, että haluta poistaa kaiken tiedon tietokannasta?</string>
+	<string name="clear_confirm_title">Tyhjennä tietokanta</string>
+	
+	<string name="confirm_api_lvl_title">Alempi API luokka</string>
+	<string name="confirm_api_lvl_content">Puhelimesi käyttöjärjestelmän API taso on pienempi kuin 25</string>
+	
+	<string name="confirm_os_title">Käyttöjärjestelmävirhe</string>
+	<string name="confirm_os_content">Käyttöjärjestelmä ei ollut android</string>
+	
+	<string name="cancel">Keskeytä</string>
+	<string name="exit">Poistu</string>
+	<string name="submit">Lähetä</string>
+	<string name="confirm">Varmista</string>
+	
+	<string name="submitButton_text">Lähetä palaute</string>
+	<string name="exitButton_text">Poistu lomakkeesta</string>
+</resources>
+

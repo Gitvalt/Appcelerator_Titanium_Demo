@@ -6,11 +6,11 @@
 		
 		<!--Menu element-->
 		<Menu>
-			<MenuItem id="menu_jsonFetcher" title="Refresh locations" onClick="refreshClick" />
-			<MenuItem id="menu_mainmenu" title="Mainmenu" onClick="toMainMenu" />
+			<MenuItem id="menu_jsonFetcher" title="L('refresh_locations')" onClick="refreshClick" />
+			<MenuItem id="menu_mainmenu" title="L('exit_to_main')" onClick="toMainMenu" />
 		</Menu>
 		
-		<Label id="label">Loading location data from url...</Label>
+		<Label id="label" text="L('locationView_label_1')" />
 		
 		<!--List container-->
 		<View id="listView_View">
@@ -36,10 +36,10 @@
 		<TableView borderColor="red" borderWidth="2" bottom="0" width="100%" height="Titanium.UI.SIZE">
 			<TableViewSection>
 				<TableViewRow>
-					<Button id="returnToList_Button" title="Return to location list" onClick="returnToList" />
+					<Button id="returnToList_Button" title="L('return_to_list')" onClick="returnToList" />
 				</TableViewRow>
 				<TableViewRow>
-					<Button id="ToMainMenu" title="Return to main menu" onClick="toMainMenu" />
+					<Button id="ToMainMenu" title="L('exit_to_main')" onClick="toMainMenu" />
 				</TableViewRow>
 			</TableViewSection>
 		</TableView>	

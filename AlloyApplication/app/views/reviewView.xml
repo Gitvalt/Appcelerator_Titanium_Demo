@@ -1,18 +1,20 @@
 <Alloy>
 	<!--Creating a group of tabs-->
 	<TabGroup id="mainTabGroup">
+		<!--Options-->
+		<Menu>
+			<MenuItem id="clear_database" title="L('clear_db')" onClick="menu_clearDatabase"/>
+		</Menu>
 		
 		<!--defaultTab shows a form that allows creatig new reviews-->
-		<Tab id="defaultTab" title="Add review">
+		<Tab id="defaultTab" title="L('add_review')">
 			<Window id="defaultWindow">
-				<TextField id="header"></TextField>
-				<TextArea id="textArea"></TextArea>
-				<Button id="submitButton" title="Submit review" onClick="submitClick"></Button>
+				<Widget src="reviewForm" id="formWidget" />
 			</Window>
 		</Tab>
 		
 		<!--resultTab contains list of sent reviews-->
-		<Tab id="resultsTab" title="View results">
+		<Tab id="resultsTab" title="L('view_results')">
 			<Window id="resultsWindow">
 				<ListView id="listView" defaultItemTemplate="elementTemplate">
 					
@@ -27,7 +29,7 @@
 					</Templates>
 					
 					<!--ListSection contains the list items-->
-					<ListSection id="mainSection" headerTitle="Reviews" />
+					<ListSection id="mainSection" headerTitle="L('reviews')" />
 				</ListView>
 			</Window>
 		</Tab>

@@ -3,12 +3,13 @@
 }
 
 "Label": {
+	left: 10,
 	width: Ti.UI.SIZE,
 	height: Ti.UI.SIZE,
 	color: "black"
 }
 "Button": {
-	top: "40",
+	top: "60",
 	left: "10",
 	right: "10",
 	width: Titanium.UI.FILL,
@@ -19,13 +20,12 @@
 }
 
 "#cardButton": {
-	top: "140"
+	top: "160"
 }
 
 "#label": {
-	top: "10dp",
-	left: "10dp",
+	top: "20",
 	font: {
-		fontSize: 12
+		fontSize: 15
 	}
 }
