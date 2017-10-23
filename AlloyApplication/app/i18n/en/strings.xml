@@ -35,6 +35,9 @@
 	<string name="submit">Submit</string>
 	<string name="confirm">Confirm</string>
 	
+	<string name="finnish_picker">Fi - Finnish</string>
+	<string name="english_picker">En - English</string>
+	
 	<string name="submitButton_text">Submit review</string>
 	<string name="exitButton_text">Exit form</string>
 </resources>

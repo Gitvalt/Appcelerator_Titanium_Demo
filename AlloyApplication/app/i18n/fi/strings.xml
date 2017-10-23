@@ -34,6 +34,9 @@
 	<string name="submit">Lähetä</string>
 	<string name="confirm">Varmista</string>
 	
+	<string name="finnish_picker">Fi - Suomi</string>
+	<string name="english_picker">En - Englanti</string>
+	
 	<string name="submitButton_text">Lähetä palaute</string>
 	<string name="exitButton_text">Poistu lomakkeesta</string>
 </resources>

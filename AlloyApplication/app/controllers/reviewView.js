@@ -14,7 +14,7 @@ renderList();
 /**
  * Uudelleen luodaan palautelista joka 15 sekuntti --> uudet tietokantaan lisätyt palautteet tulevat näkyviin
  */
-setInterval(renderList, (1000 * 15));
+setInterval(renderList, (1000 * 5));
 
 
 

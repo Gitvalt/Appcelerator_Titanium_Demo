@@ -33,7 +33,7 @@
 				</ListSection>	
 			</ListView>
 		</View>
-		<TableView borderColor="red" borderWidth="2" bottom="0" width="100%" height="Titanium.UI.SIZE">
+		<TableView class="tableView">
 			<TableViewSection>
 				<TableViewRow>
 					<Button id="returnToList_Button" title="L('return_to_list')" onClick="returnToList" />

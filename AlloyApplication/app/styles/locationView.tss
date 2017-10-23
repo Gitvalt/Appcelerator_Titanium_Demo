@@ -12,6 +12,7 @@
 "#label": {
 	top: "10",
 	left: "10",
+	right: "10",
 	width: "100%",
 	height: Titanium.UI.SIZE,
 	font: {
@@ -19,14 +20,16 @@
 	}
 }
 
-//Affects element with id "listView"
+//View that contains the locationlist or mapview
 "#listView_View": {
-	top: "0",
+	top: "20",
 	left: "10",
 	right: "10",
 	width: Titanium.UI.FILL,
 	height: "65%"
 }
+
+//---Location list item---
 
 ".list_header": {
 	textAlign: Titanium.UI.TEXT_ALIGNMENT_LEFT,
@@ -59,3 +62,27 @@
 	}	
 }
 
+//---
+
+"#returnToList_Button": {
+	visible: false,
+	right: 10,
+	left: 10,
+	width: "100%"
+}
+
+"#ToMainMenu": {
+	right: 10,
+	left: 10,
+	top: 20,
+	width: "100%"
+}
+
+".tableView": {
+	top: 20,
+	bottom: 0,
+	width: "90%",
+	left: 10,
+	right: 10,
+	height: "30%"
+}

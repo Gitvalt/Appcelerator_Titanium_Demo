@@ -1,21 +1,28 @@
-// Arguments passed into this controller can be accessed via the `$.args` object directly or:
+/**
+ * @param	args				Kontrolleriin tuodut argumentit
+ * 
+ * @param	jsonURL				URL-osoite, josta sijainnit haetaan
+ * @param	fetchedLocation		Student-palvelimelta haetut sijainnit
+ * 
+ * @param	Map					Linkki kartta moduuliin
+ * @param	isMapAvailable		Onko karttanäkymä mahdollista
+ * @param	mapView				Auki oleva karttanäkymä. Käytetään karttanäkymän sulkemisen yhteydessä
+ */
 var args = $.args;
-
 var jsonURL = 'http://student.labranet.jamk.fi/~K1967/androidCourses/dummyJSON.json';
-
-//haetut sijainnit
+var Map = require("ti.map");
+var isMapAvailable = false;
 var fetchedLocation = null;
-
-//karttanäkymä
 var mapView = null;
 
-//avataan näkymä
+
+
+//avataan käyttöliittymä
 $.locationView.open();
 
-/**
- * Haetaan sijaintitietoa "jsonURL" osoitteesta ja luodaan listaelementti näkymään
- */
+//Haetaan sijaintitietoa "jsonURL" osoitteesta ja luodaan listaelementti näkymään
 fetchJSON(jsonURL);
+
 
 
 
@@ -64,19 +71,60 @@ function createNotification(title, message){
  */
 function handleItemClick(e){
 	
+	console.info("Handle item click!");
+	
 	if(e == null){
 		console.error("Itemclick 'e' was empty!");
 		return;
 	}
 	
+	/**
+	 * itemIndex 	- 	listan kohta, jota painettiin
+	 * item			-	elementti, joka vastaa painettua listan kohtaa
+	 */
 	var itemIndex = e.itemIndex;
-	var item;
+	var item = fetchedLocation[itemIndex];
 	
 	//haetaan sijainneista valittu sijainti
 	item = fetchedLocation[itemIndex];
+
+	//testataan toimiiko tiedon haku
+	console.info("Information of click: title, latitude, longitude");
+	console.log(item.Title);
+	console.log(item.Latitude);
+	console.log(item.Longitude);
+
+	//Luodaan merkki, joka vastaa valittua elementtiä
+	var annotation = Map.createAnnotation({
+		latitude: item.Latitude,
+		longitude: item.Longitude,
+		title: item.Title,
+		subtitle: 'Cupertino, CA',
+		pincolor: Ti.Map.ANNOTATION_GREEN		
+	});
 	
-	//ladataan kartta
-	loadMap($.mapView);
+	//luodaan kartta
+	var mapView = loadMap(annotation);
+	
+	//lisätään merkki karttaan
+	mapView.addAnnotation(annotation);
+	
+	//keskitetään näkymä valitun merkin kohdalle
+	mapView.setRegion({
+		latitude: item.Latitude,
+		longitude: item.Longitude,
+		latitudeDelta: 0.1,
+		longitudeDelta: 0.1
+	});
+
+	//laitetaan sijaintilista piilotetuksi ja lisätään karttanäkymä listan sijalle.
+	$.listView.setVisible(false);
+	$.listView_View.add(mapView);
+	
+	
+	//Päivitetään status ja piilotetaan palautusnappi
+	$.returnToList_Button.setVisible(true);
+	$.label.setText("Showing location: '" + item.Title + "'");
 }
 
 /**
@@ -89,37 +137,46 @@ function returnToList(){
 	//listanäkymä näkyvyys palautetaan
 	$.listView.setVisible(true);
 	
-	console.log("Removing mapview");
+	$.returnToList_Button.setVisible(false);
+
+	//päivitetään status
+	$.label.setText("Returning to listview");
 }
 
 /**
  * @function				Ladataan kartta
  * @param		targetView	näkymä, jonne kartta ladataan
  */
-function loadMap(targetView){
-	
-	var Map = require("ti.map");
-	
-	if(Ti.Platform.Android.API_LEVEL < "25"){
+function loadMap(){
 		
-		console.log(Ti.Platform.Android.API_LEVEL);
-			
+	try {
+		//checking if googleplayservices is enabled on this device
 		var isEnabled = Map.isGooglePlayServicesAvailable();
+		
 		if(isEnabled != Map.SUCCESS){
 			console.error("Not enabled");	
+			return;
 		}
+			
+		if(Ti.Platform.name == "windows"){
+			console.error("Map module is not supported in windows devices");
+			return;
+		} 
+		else 
+		{
+			var mapview = Map.createView({
+				mapType: Map.NORMAL_TYPE,
+			});
 		
-	} 
-	
-	var mapview = Map.createView({
-		mapType: Map.NORMAL_TYPE
-	});
-	
-	$.listView.setVisible(false);
-	$.listView_View.add(mapview);
-	
-	//save the view for deletion
-	mapView = mapview;
+			//save the view for deletion
+			mapView = mapview;
+			
+			return mapview;	
+		}
+	} catch(error){
+		console.error(error.message);
+		alert("Opening map failed. Error: " + error.message);
+	}
 }
 
 
@@ -223,6 +280,9 @@ function createList(items) {
  */
 function fetchJSON(targetURL){
 		
+		$.label.setText("Loading locations from url started");
+		console.log("Downloading data from url started");
+		
         var client = Ti.Network.createHTTPClient({
             onload : function(e) {
                 
@@ -252,6 +312,8 @@ function fetchJSON(targetURL){
 					//save values to variable
 					fetchedLocation = Locations;
 					
+					
+					$.label.setText("Loading locations have been completed");
 					handleJSON(Locations);
                 }
             }
