@@ -1,8 +1,26 @@
-Alloy applikaatio
+Appcelerator titanium testerapplication
 
-TODO:
-kommentit suomeksi
-esitelmä
-json on error
-animations
-notifications
+Content:
+
+1. Location - Map fetcher
+Fetcher fetches json-file from student server. Reads and displays received location data. When user selects location map-module is used
+to display a mapView, centered and showing the selected location as a marker.
+Tests:
+ * HttpClient
+ * ti.map module
+ * Listview with template
+ * Menu
+ * Toast-messaging
+ 
+
+2. Review-form
+User can write a review header and content. Content is saved to a phone's internal database. All reviews are then displayed in a 
+list. Clearing database is available.
+Tests:
+  * Database managment
+  * Widgets
+  * Listview with template
+  
+  
+  ---
+  
