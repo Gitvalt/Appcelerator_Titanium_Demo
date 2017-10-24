@@ -198,9 +198,9 @@ function loadMap(){
 
 
 /**
- * @desc Käsitellään haettu json tiedosto. Esim. kun tietoa aletaan sivun latautuessa hakemaan, niin fetchjson vastaa jo "undefined" vaikka lataus on kesken. 
- * Kun lataus on suoritettu tai se epäonnistuu, suorittaa fetchjson tämän funktion uudestaan, mutta tällä kertää @response oikeasti sisältää vastauksen. 
- * @param {*} response 
+ * @function	Handle received json data 
+ * @desc 	As the loadJSON is a async function, the function will complete before data has been received. Therefor we wait until
+ 		we receive the data or a false if function fails.
  */
 function handleJSON(response){
     switch(response)
@@ -223,15 +223,15 @@ function handleJSON(response){
            	$.listView_Section.setItems(list);
           	
             //show "completed task" Toast
-			$.taskDoneNotf.show();
+		$.taskDoneNotf.show();
         break;
     }
 }
 
 /**
- * Näytetään toast-viesti puhelimessa
- * @param	message			Toast-viesti
- * @param	toast_duration	Viestin kesto
+ * Show a Android Toast notification
+ * @param	message		Content of the notification
+ * @param	toast_duration	Duration the notification is shown
  */
 function showToastMessage(message, toast_duration){
 	var toast = Ti.UI.createNotification({
@@ -242,10 +242,9 @@ function showToastMessage(message, toast_duration){
 }
 
 /**
- * Luodaan array, joka sisältää määritellyt string elementit
- *
- * @param  items 		Kaikki listaan listävävät materiaalit
- * @return {ListView} 	Lista, jossa on luodut osiot
+ * Create a array that is shown as a list
+ * @param  items 		All information tha will be added to list
+ * @return 			Array containing correctly formated items for listItemTemplate 
  */
 function createList(items) {
     
@@ -292,11 +291,12 @@ function createList(items) {
 }
 
 /**
- * @desc			Haetaan määritetystä url-osoitteesta "targetURL" json-tiedosto
- * @param {string} 	targetURL 
+ * @desc			Fetch json data from location {targetURL}
+ * @param 	targetURL 	URL From where data is loaded
  */
 function fetchJSON(targetURL){
-		
+	
+	try {
 		$.label.setText("Loading locations from url started");
 		console.log("Downloading data from url started");
 		
@@ -337,5 +337,12 @@ function fetchJSON(targetURL){
         });
         client.open("GET", targetURL);
         client.send();
+	} 
+	catch(err)
+	{
+		console.error("LoadJSON failed");
+		console.error(err.message);
+		return false;
+	}
     }
     
