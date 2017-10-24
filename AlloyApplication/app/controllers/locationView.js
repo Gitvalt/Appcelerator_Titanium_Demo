@@ -1,42 +1,42 @@
 /**
- * @param	args				Kontrolleriin tuodut argumentit
+ * @param	args				Arguments pushed to the controller on creation
  * 
- * @param	jsonURL				URL-osoite, josta sijainnit haetaan
- * @param	fetchedLocation		Student-palvelimelta haetut sijainnit
+ * @param	jsonURL				URL from where the location data is loaded
+ * @param	fetchedLocation			Locations loaded from the jsonURL
  * 
- * @param	Map					Linkki kartta moduuliin
- * @param	isMapAvailable		Onko karttanäkymä mahdollista
- * @param	mapView				Auki oleva karttanäkymä. Käytetään karttanäkymän sulkemisen yhteydessä
+ * @param	Map				Link to map module
+ * @param	isMapAvailable			Is mapview possible to be shown
+ * @param	mapView				Currently open mapview
  */
 var args = $.args;
 var jsonURL = 'http://student.labranet.jamk.fi/~K1967/androidCourses/dummyJSON.json';
 var Map = require("ti.map");
-var isMapAvailable = false;
+var isMapAvailable = false;	//currently not used in anything
 var fetchedLocation = null;
 var mapView = null;
 
 
 
-//avataan käyttöliittymä
+//open user interface
 $.locationView.open();
 
-//Haetaan sijaintitietoa "jsonURL" osoitteesta ja luodaan listaelementti näkymään
+//fetch locations from url {jsonURL} and show them in a list 
 fetchJSON(jsonURL);
 
 
 
 
-//Funktiot:
+//Functions:
 
 /**
- * Kun "päivitys"-painiketta painetaan, ohjelma hakee sijainnit uudestaan internetistä.
+ * When update option is clicked, locations are refetched from internet
  */
 function refreshClick(){
 	fetchJSON(jsonURL);
 }
 
 /**
- * Painike palauttaa käyttäjän aloitusnäkymään.
+ * Return's user to the main menu
  */
 function toMainMenu(){
 	var windows = Alloy.createController("index").getView();
@@ -44,12 +44,13 @@ function toMainMenu(){
 }
 
 /**
- * Luodaan notifikaatio android laitteelle
- * @param 	title	otsikko notifikaatiolle
- * @param	message	viesti notifikaatiolle
+ * Creates and show's a notification
+ * @param 	title	header of notification
+ * @param	message	text content of notification
  */
 function createNotification(title, message){
-	Ti.Android.NotificationManager.notify(notf_id,
+//show notification with id {notf_id} and content {createNotifications}	
+Ti.Android.NotificationManager.notify(notf_id,
     Ti.Android.createNotification({
         contentTitle: title,
         contentText: message,
@@ -66,8 +67,8 @@ function createNotification(title, message){
 }
 
 /**
- * Käsitellään sijaintilistan elementin painaminen
- * @param	e	Sisältää tiedot painikkeesta, jota painettiin
+ * Handle itemclick of the locations list
+ * @param	e	Event created by the click
  */
 function handleItemClick(e){
 	
@@ -79,37 +80,43 @@ function handleItemClick(e){
 	}
 	
 	/**
-	 * itemIndex 	- 	listan kohta, jota painettiin
-	 * item			-	elementti, joka vastaa painettua listan kohtaa
+	 * itemIndex 		- 	index of the selected element
+	 * item			-	element with index {itemIndex}
 	 */
 	var itemIndex = e.itemIndex;
 	var item = fetchedLocation[itemIndex];
 	
-	//haetaan sijainneista valittu sijainti
+	//get the selected element from the fetched location list
 	item = fetchedLocation[itemIndex];
 
-	//testataan toimiiko tiedon haku
+	//For debugging we check the found information
 	console.info("Information of click: title, latitude, longitude");
 	console.log(item.Title);
 	console.log(item.Latitude);
 	console.log(item.Longitude);
 
-	//Luodaan merkki, joka vastaa valittua elementtiä
+	//Creating marker for selected location
 	var annotation = Map.createAnnotation({
 		latitude: item.Latitude,
 		longitude: item.Longitude,
 		title: item.Title,
-		subtitle: 'Cupertino, CA',
+		subtitle: item.Description,
 		pincolor: Ti.Map.ANNOTATION_GREEN		
 	});
 	
-	//luodaan kartta
-	var mapView = loadMap(annotation);
+	//create a map
+	var mapView = loadMap();
 	
-	//lisätään merkki karttaan
+	//check if creating map worked
+	if(mapView == null || mapView == undefined){
+		console.error("Creating a map has failed. Map is not shown);
+	     	return;
+	}
+	
+	//add created marker to the map
 	mapView.addAnnotation(annotation);
 	
-	//keskitetään näkymä valitun merkin kohdalle
+	//center the map to the created marker
 	mapView.setRegion({
 		latitude: item.Latitude,
 		longitude: item.Longitude,
@@ -117,53 +124,55 @@ function handleItemClick(e){
 		longitudeDelta: 0.1
 	});
 
-	//laitetaan sijaintilista piilotetuksi ja lisätään karttanäkymä listan sijalle.
+	//hide the location list and add the map to the view
 	$.listView.setVisible(false);
 	$.listView_View.add(mapView);
 	
 	
-	//Päivitetään status ja piilotetaan palautusnappi
+	//update the status label and unhide the "return to list"-button
 	$.returnToList_Button.setVisible(true);
 	$.label.setText("Showing location: '" + item.Title + "'");
 }
 
 /**
- * Poistetaan auki oleva karttanäkymä ja palataan sijaintien listanäkymään. Lista-elementien näkyvyys palautetaan. 
+ * Remove the map and show the locations list
  */
 function returnToList(){
-	//poistetaan karttanäkymä
+	//removing map
 	$.listView_View.remove(mapView);
 	
-	//listanäkymä näkyvyys palautetaan
+	//return visibilty of the list to true
 	$.listView.setVisible(true);
 	
+	//hide "return to list"-button
 	$.returnToList_Button.setVisible(false);
 
-	//päivitetään status
+	//update status label
 	$.label.setText("Returning to listview");
 }
 
 /**
- * @function				Ladataan kartta
- * @param		targetView	näkymä, jonne kartta ladataan
+ * @function	Create and return a map view if possible
+ * @return	returns null if something fails
  */
 function loadMap(){
 		
 	try {
 		//checking if googleplayservices is enabled on this device
 		var isEnabled = Map.isGooglePlayServicesAvailable();
-		
 		if(isEnabled != Map.SUCCESS){
 			console.error("Not enabled");	
 			return;
 		}
-			
+		
+		//check the current device's operation system
 		if(Ti.Platform.name == "windows"){
 			console.error("Map module is not supported in windows devices");
 			return;
 		} 
 		else 
 		{
+			//if operation system and google play store are acceptable
 			var mapview = Map.createView({
 				mapType: Map.NORMAL_TYPE,
 			});
@@ -171,11 +180,19 @@ function loadMap(){
 			//save the view for deletion
 			mapView = mapview;
 			
+			//return results
 			return mapview;	
 		}
-	} catch(error){
+	} 
+	catch(error)
+	{
+		
+		console.info("LoadMap has failed. Hint: Emulator cannot use Map module);
 		console.error(error.message);
+		
+		//alert user about the failure
 		alert("Opening map failed. Error: " + error.message);
+		
 	}
 }
 
