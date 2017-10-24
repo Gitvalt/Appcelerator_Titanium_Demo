@@ -1,7 +1,7 @@
 # Appcelerator titanium demo application
 
 Research made for JAMK "Mobile programming"-course.
-Docs contain presentation and it's assets.
+Docs folder contain presentation and it's assets.
 
 
 
