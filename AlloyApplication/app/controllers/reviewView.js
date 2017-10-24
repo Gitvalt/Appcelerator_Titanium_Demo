@@ -1,30 +1,33 @@
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
-//Sisältää kaikki palautteet
+//All arguments given to controller
 var Reviews = [];
 
-//avataan näkymä
+//open user interface
 $.defaultTab.open();
 
-//määritetään muuttuja tietokannan lukemista varten ja luodaan lista olemassa olevista palautteista
+//Create database object, that is used to control reading and writing data to database
 var db = DB();
+
+//Create the list in the "results" -tab
 renderList();
 
 /**
- * Uudelleen luodaan palautelista joka 15 sekuntti --> uudet tietokantaan lisätyt palautteet tulevat näkyviin
+ * For every {interval} seconds we recheck the database  
  */
-setInterval(renderList, (1000 * 5));
+var interval = 5;
+setInterval(renderList, (1000 * interval));
 
 
 
 
 /**
- * Tyhjennetään kaikki tieto "palaute" -taulusta
+ * Clear the database from all information
  */
 function menu_clearDatabase(){
 	
-	//luodaan dialogi, jolla varmistetaan tietojen poistaminen
+	//Create a dialog in order to confirm clearing data
 	var alertDialog = Ti.UI.createAlertDialog({
 		cancel: 0,
 		confirm: 1,
@@ -33,45 +36,47 @@ function menu_clearDatabase(){
 		buttonNames: [L('cancel'), L('confirm')]
 	});
 	
-	//lisätään dialogiin painikkeen painallusta kuunteleva kuuntelija
+	//insert eventlisteners to dialog
 	alertDialog.addEventListener("click", function(e){
-		//tarkistetaan kumpaa painiketta on painettu
+		
+		//check which button was pressed
 		if(e.index == e.source.cancel){
 			console.log("Cancel reset");
 		} 
 		else 
 		{
-			//tyhjennetään "palaute" -taulu tietokannasta
+			//empty the "review"-table
 			db.resetReviews();
 			
-			//uudelleenpiirretään palautelista
+			//redraw the review list
 			renderList();
 			
 			console.log("Cleared the database");	
 		}
-	});
+	}); //ends creating eventlisteners
 	
-	//näytetään dialogi
+	//show dialog
 	alertDialog.show();
 }
 
 /**
- * Tietokanta-objekti, jolle on määritelty metodit tiedon listäämiseen, näyttämiseen ja poistamiseen.
+ * Database object containing methods for insert, select and deletion of data
  * 
  * !Hard coded parameters
  * "Table" as "review"
  * 
- * @function	db.insertReview(header, description)	Lisätään palaute tietokantaan
- * @function	db.selectReviews()						Haetaan kaikki palautteet tietokannasta
- * @function	db.resetReviews()						Tyhjennetään "palaute"-taulu
- * @param		db.table								Taulu jonne tiedot tallennetaan
+ * @function	db.insertReview(header, description)				Add review to database
+ * @function	db.selectReviews()						Get all reviews
+ * @function	db.resetReviews()						Empty review-table
+ * @param	db.table							Table where data is saved
+ * @return									returns db-object
  */
 function DB(){
 	
 	var db = new Object();
 	db.table = "review";
 	
-	//lisätään palaute tietokantaan
+	//insert review
 	db.insertReview = function(header, description){
 		
 		if(header == null || header == undefined || description == undefined || description == null){
@@ -87,7 +92,7 @@ function DB(){
 		console.log("Insert \'" + header + "\' into table");
 	};
 	
-	//palautteiden hakeminen tietokannasta
+	//fetch reviews
 	db.selectReviews = function(){
 		console.info("Begin reading the database");
 		var db_builder = Ti.Database.open("review_db");
@@ -109,7 +114,7 @@ function DB(){
 		return array;
 	};
 	
-	//tyhjennetään tietokanta
+	//clear reviews
 	db.resetReviews = function(){
 		console.info("Begin reading the database");
 		var db_builder = Ti.Database.open("review_db");
@@ -117,7 +122,7 @@ function DB(){
 		db_builder.close();
 	};
 	
-	//Luodaan palaute taulu, jos se ei vielä ole olemassa
+	//Create table if not exists
 	var database_Builder = Ti.Database.open("review_db");
 	database_Builder.execute('CREATE TABLE IF NOT EXISTS ' + db.table + ' (_id INTEGER PRIMARY KEY, header TEXT, description TEXT)');
 	database_Builder.close();
@@ -131,9 +136,8 @@ function DB(){
 
 /**
  * Show a toast message with message $message and duration $toast_duration
- * Näytetään viesti
- * @param	message			Näytettävä viesti
- * @param	toast_duration	Kauanko viestiä näytetään (Ti.UI.NOTIFICATION_DURATION_*)
+ * @param	message		Message content
+ * @param	toast_duration	Notification time (Ti.UI.NOTIFICATION_DURATION_*)
  */
 function showToastMessage(message, toast_duration){
 	
@@ -147,27 +151,27 @@ function showToastMessage(message, toast_duration){
 }
 
 /**
- * Poistetaan elementit jos niitä on listassa olemassa ja listään tietokannasta saadut palautteet listaan
+ * Draw the list containing all reviews.
  */
 function renderList(){
 	
-	//tarkistetaan onko listassa jo elementtejä
+	//Check if list already has items in it
 	var count = $.mainSection.items.length;
 	
-	//jos on listassa jo elementtejä, ne poistetaan
+	//if true, remove items
 	if(count > 0){
 		$.mainSection.deleteItemsAt(0, count);
 	}
 	
-	//haetaan palautteita tietokannasta 
+	//get reviews from database
 	Reviews = db.selectReviews();
 	var nameList = [];
 	
-	//lisätään palautteet näytettävään listaan
+	//add reviews to the list
 	if(Reviews.length > 0){
 		
 		/**
-		 * sidotaan lista elementin pohjaan palautteen otsikko ja sisältö 
+		 * Bind list elements to the listTemplate
 		 */
 		for (var i = 0; i < Reviews.length; i++) {
 			nameList.push(
