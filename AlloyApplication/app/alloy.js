@@ -9,7 +9,3 @@
 // object. For example:
 //
 // Alloy.Globals.someGlobalFunction = function(){};
-
-var language = Ti.App.Properties.getString('selectedLanguage','es');
-Alloy.Globals.language = language;
-Ti.Locale.setLanguage(language);
