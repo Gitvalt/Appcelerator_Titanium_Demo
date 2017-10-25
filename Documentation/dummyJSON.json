@@ -1,0 +1,27 @@
+{
+	"Locations": [{
+			"Title": "JAMK, Finland",
+			"Latitude": 62.251149,
+			"Longitude": 25.741763,
+			"Description": "Jyvaskyla College of Applied Sciences"
+		},
+		{
+			"Title": "Helsinki Airport, Finland",
+			"Latitude": 60.32104159,
+			"Longitude": 24.952860,
+			"Description": "Helsinki Vantaa Airport"
+		},
+		{
+			"Title": "Stockholm, Sweden",
+			"Latitude": 59.32932349,
+			"Longitude": 18.0685808,
+			"Description": "Capital of Sweden"
+		},
+		{
+			"Title": "Hell, USA",
+			"Latitude": 43.43472,
+			"Longitude": -83.98500000000,
+			"Description": "Hell, MI, USA"
+		}
+	]
+}
