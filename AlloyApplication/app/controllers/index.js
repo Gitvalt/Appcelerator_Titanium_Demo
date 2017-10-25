@@ -1,10 +1,15 @@
-// Avataan index näkymä. (app/views/index.xml)
+// Open view index.js (app/views/index.xml)
 $.index.open();
+
+
+
 
 //We open locationView.js controller
 function openFetcher(){	openView("locationView");	}
 
+
 function openReview(){	openView("reviewView");		}
+
 
 /**
  * Open new controller (app/controllers/*)

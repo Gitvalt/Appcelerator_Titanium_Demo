@@ -109,8 +109,8 @@ function handleItemClick(e){
 	
 	//check if creating map worked
 	if(mapView == null || mapView == undefined){
-		console.error("Creating a map has failed. Map is not shown);
-	     	return;
+		console.error("Creating a map has failed. Map is not shown");
+	    return;
 	}
 	
 	//add created marker to the map
@@ -187,7 +187,7 @@ function loadMap(){
 	catch(error)
 	{
 		
-		console.info("LoadMap has failed. Hint: Emulator cannot use Map module);
+		console.info("LoadMap has failed. Hint: Emulator cannot use Map module");
 		console.error(error.message);
 		
 		//alert user about the failure
@@ -200,7 +200,7 @@ function loadMap(){
 /**
  * @function	Handle received json data 
  * @desc 	As the loadJSON is a async function, the function will complete before data has been received. Therefor we wait until
- 		we receive the data or a false if function fails.
+ * we receive the data or a false if function fails.
  */
 function handleJSON(response){
     switch(response)
@@ -342,7 +342,6 @@ function fetchJSON(targetURL){
 	{
 		console.error("LoadJSON failed");
 		console.error(err.message);
-		return false;
 	}
     }
     
